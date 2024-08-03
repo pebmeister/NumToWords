@@ -1,3 +1,6 @@
+import argparse
+
+
 # -*- coding: utf-8 -*-
 '''
 Created on Mon Jul 22 13:20:11 2024
@@ -102,9 +105,28 @@ def number_to_words(number: int) -> str:
 
 
 def main() -> None:
-    num = 87696123456123456456786789
-    print(format_number(num))
-    print(number_to_words(num))
+    
+    # create parser
+    desc_str = "This program takes a number and outputs it in words for example 123 One Hundred Twenty Three."
+    parser = argparse.ArgumentParser(prog='numtoword', description=desc_str)
+    parser.add_argument(dest="num", type=int, help='numbwer to tranlate to words')
+
+    # parse args
+    try:
+        args = parser.parse_args()
+
+    except argparse.ArgumentError:
+        print('Argument error. Unable to parse arguments.')
+        parser.print_help()
+        return
+
+    except argparse.ArgumentTypeError:
+        print('Argument type error. Unable to parse arguments.')
+        parser.print_help()
+        return
+
+    print(format_number(args.num))
+    print(number_to_words(args.num))
 
 
 # call main
