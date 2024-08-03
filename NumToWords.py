@@ -109,7 +109,7 @@ def main() -> None:
     # create parser
     desc_str = "This program takes a number and outputs it in words for example 123 One Hundred Twenty Three."
     parser = argparse.ArgumentParser(prog='numtowords', description=desc_str)
-    parser.add_argument(dest="num", type=int, help='numbwer to tranlate to words')
+    parser.add_argument(dest="num", type=int, help='number to translate to words')
 
     # parse args
     try:
