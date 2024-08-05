@@ -1,4 +1,5 @@
 import argparse
+from ast import Num
 
 
 # -*- coding: utf-8 -*-
@@ -35,6 +36,9 @@ def number_split(number: int) -> list:
 # format a number with commas
 def format_number(number: int) -> str:
     out: str = ''
+    if number < 0:
+        number = -number
+        out = '-'
     groups: list = number_split(number)
 
     for group in range(len(groups) - 1):
@@ -48,6 +52,12 @@ def format_number(number: int) -> str:
 def number_to_words(number: int) -> str:
 
     out: str = ''
+    
+    # check for negative number
+    if number < 0:
+        number = -number
+        out = 'Negative'
+        
     groups: list = number_split(number)
 
     # get index for group name (hundreds thousands etc)

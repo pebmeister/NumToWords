@@ -12,7 +12,7 @@
     <Name>NumToWords</Name>
     <RootNamespace>NumToWords</RootNamespace>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
-    <CommandLineArguments>234567762345678987</CommandLineArguments>
+    <CommandLineArguments>-123456</CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
     <IsWindowsApplication>False</IsWindowsApplication>
   </PropertyGroup>
