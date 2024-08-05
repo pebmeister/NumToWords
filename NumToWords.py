@@ -8,19 +8,25 @@ Created on Mon Jul 22 13:20:11 2024
 @author: Paul Baxter
 '''
 
+ONES = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine']
+TEENS = ['Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen']
+TENS = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety']
+GROUP_NAMES = ['Hundred', 'Thousand', 'Million', 'Billion', 'Trillion', 'Quadrillion', 'Quintillion', 'Sextillion', 'Septillion', 'Octillion', 'Nonillion', 'Decillion', 'Undecillion', 'Duodecillion', 'Tredecillion', 'Quattuordecillion', 'Quindecillion', 'Sexdecillion', 'Septendecillion', 'Octodecillion', 'Novemdecillion', 'Vigintillion']
+GROUP_SZ = 3
+ORD_ZERO: int = ord('0')
 
-# split a number into groups of 3
+# split a number into groups
 def number_split(number: int) -> list:
+
     groups: list = []
     str_num: str = format(number)
     str_len: int = len(str_num)
 
-    # split numbers into groups of 3
-    while str_len >= 3:
-        group = str_num[str_len - 3: str_len]
+    while str_len >= GROUP_SZ:
+        group = str_num[str_len - GROUP_SZ: str_len]
         groups.insert(0, group)
-        str_num = str_num[0:-3]
-        str_len -= 3
+        str_num = str_num[0:-GROUP_SZ]
+        str_len -= GROUP_SZ
     if str_len > 0:
         groups.insert(0, str_num[0: str_len])
     return groups
@@ -40,12 +46,6 @@ def format_number(number: int) -> str:
 
 # format a number to words
 def number_to_words(number: int) -> str:
-    ONES = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine']
-    TEENS = ['Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen']
-    TENS = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety']
-    GROUP_NAMES = ['Hundred', 'Thousand', 'Million', 'Billion', 'Trillion', 'Quadrillion', 'Quintillion', 'Sextillion', 'Septillion', 'Octillion', 'Nonillion', 'Decillion', 'Undecillion', 'Duodecillion', 'Tredecillion', 'Quattuordecillion', 'Quindecillion', 'Sexdecillion', 'Septendecillion', 'Octodecillion', 'Novemdecillion', 'Vigintillion']
-
-    ORD_ZERO: int = ord('0')
 
     out: str = ''
     groups: list = number_split(number)
@@ -70,9 +70,9 @@ def number_to_words(number: int) -> str:
                     sp = ' '
                 out += sp + ONES[hundred_index] + ' ' + GROUP_NAMES[0]
 
-        # tens
+        # tens and teens
         if group_len > 1:
-            adjust: int = 3 - group_len
+            adjust: int = GROUP_SZ - group_len
             ten_index: int = ord(group[1 - adjust]) - ORD_ZERO
 
             if ten_index != 0:
@@ -81,8 +81,8 @@ def number_to_words(number: int) -> str:
 
                 # check for teens
                 if ten_index == 1:
-                    ten_index = ord(group[2 - adjust]) - ORD_ZERO
-                    out += sp + TEENS[ten_index]
+                    teen_index = ord(group[2 - adjust]) - ORD_ZERO
+                    out += sp + TEENS[teen_index]
                     include_ones = False
                 else:
                     out += sp + TENS[ten_index]
@@ -107,7 +107,7 @@ def number_to_words(number: int) -> str:
 def main() -> None:
     
     # create parser
-    desc_str = "This program takes a number and outputs it in words for example 123 One Hundred Twenty Three."
+    desc_str = "This program takes a number and outputs it in words for example 2123 Two Thousand One Hundred Twenty Three."
     parser = argparse.ArgumentParser(prog='numtowords', description=desc_str)
     parser.add_argument(dest="num", type=int, help='number to translate to words')
 
